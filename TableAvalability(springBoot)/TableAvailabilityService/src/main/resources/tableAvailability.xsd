@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:tns="http://com.springbootsoap.allapis"
+           targetNamespace="http://com.springbootsoap.allapis"
+           elementFormDefault="qualified">
+
+    <xs:element name="getAvailableTablesRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="restaurantId" type="xs:int"/>
+                <xs:element name="date" type="xs:date"/>
+                <xs:element name="time" type="xs:time"/>
+                <xs:element name="numOfChairs" type="xs:int" minOccurs="0"/>
+                <xs:element name="position" type="xs:string" minOccurs="0"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getAvailableTablesResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="tables" type="tns:table" maxOccurs="unbounded" minOccurs="0"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="table">
+        <xs:sequence>
+            <xs:element name="id" type="xs:int"/>
+            <xs:element name="number" type="xs:int"/>
+            <xs:element name="position" type="xs:string"/>
+            <xs:element name="numOfChairs" type="xs:int"/>
+            <xs:element name="available" type="xs:boolean"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>
