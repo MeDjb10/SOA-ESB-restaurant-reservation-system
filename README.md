@@ -202,12 +202,15 @@ cd restaurant-reservation-system
 ## **Screenshots**
 ### MuleSoft Flow
    - **Restaurant List Flow**
+     
      ![MuleSoft Flow](screenshots/Flow1.png)
      
    - **Table availability Flow**
+     
      ![MuleSoft Flow](screenshots/Flow2.png)
 
    - **Reservation & Payment Flow**
+     
      ![MuleSoft Flow](screenshots/Flow3.png)
 ---
 
