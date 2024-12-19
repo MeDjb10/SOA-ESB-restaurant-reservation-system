@@ -1,0 +1,11 @@
+{
+  "id": 3,
+  "clientName": "John Doe",
+  "phone": "123-456-7890",
+  "email": "john.doe@example.com",
+  "startTime": "2023-10-01T18:00:00.000Z",
+  "endTime": "2023-10-01T20:00:00.000Z",
+  "status": "not confirmed",
+  "tableId": 1,
+  "restaurantId": 1
+}

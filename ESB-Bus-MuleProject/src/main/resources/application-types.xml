@@ -1,0 +1,160 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<types:mule xmlns:types="http://www.mulesoft.org/schema/mule/types">
+  <types:catalog>
+    <types:type name="table" format="json">
+      <types:shape format="weave" example="examples/table.json"><![CDATA[%dw 2.0
+
+type table = {|
+  restaurantId: Number {"typeId": "int"}, 
+  date: String, 
+  time: String, 
+  numOfChairs: Number {"typeId": "int"}, 
+  position: String
+|} {"example": "{\\\"restaurantId\\\":1,\\\"date\\\":\\\"2024-12-03\\\",\\\"time\\\":\\\"18:00\\\",\\\"numOfChairs\\\":4,\\\"position\\\":\\\"outside\\\"}"}
+
+]]></types:shape>
+    </types:type>
+    <types:type name="resqponse" format="json">
+      <types:shape format="weave" example="examples/response.json"><![CDATA[%dw 2.0
+
+type resqponse = Array<{|  id: Number {"typeId": "int"},   number: Number {"typeId": "int"},   position: String,   numOfChairs: Number {"typeId": "int"},   available: Boolean|}> {"example": "[{\\\"id\\\":1,\\\"number\\\":1,\\\"position\\\":\\\"outside\\\",\\\"numOfChairs\\\":4,\\\"available\\\":true},{\\\"id\\\":2,\\\"number\\\":3,\\\"position\\\":\\\"outside\\\",\\\"numOfChairs\\\":4,\\\"available\\\":true}]"}
+
+]]></types:shape>
+    </types:type>
+    <types:type name="reservationRequest" format="json">
+      <types:shape format="weave" example="examples/reservationRequest.json"><![CDATA[%dw 2.0
+
+type reservationRequest = {|
+  clientName: String, 
+  phone: String, 
+  email: String, 
+  startTime: String, 
+  endTime: String, 
+  tableId: Number {"typeId": "int"}, 
+  restaurantId: Number {"typeId": "int"}
+|} {"example": "{\\\"clientName\\\":\\\"John Doe\\\",\\\"phone\\\":\\\"123-456-7890\\\",\\\"email\\\":\\\"john.doe@example.com\\\",\\\"startTime\\\":\\\"2023-10-01T18:00:00Z\\\",\\\"endTime\\\":\\\"2023-10-01T20:00:00Z\\\",\\\"tableId\\\":1,\\\"restaurantId\\\":1}"}
+
+]]></types:shape>
+    </types:type>
+    <types:type name="ReservationOutput" format="json">
+      <types:shape format="weave" example="examples/reservationOutput.json"><![CDATA[%dw 2.0
+
+type ReservationOutput = {|
+  id: Number {"typeId": "int"}, 
+  clientName: String, 
+  phone: String, 
+  email: String, 
+  startTime: String, 
+  endTime: String, 
+  status: String, 
+  tableId: Number {"typeId": "int"}, 
+  restaurantId: Number {"typeId": "int"}
+|} {"example": "{\\\"id\\\":3,\\\"clientName\\\":\\\"John Doe\\\",\\\"phone\\\":\\\"123-456-7890\\\",\\\"email\\\":\\\"john.doe@example.com\\\",\\\"startTime\\\":\\\"2023-10-01T18:00:00.000Z\\\",\\\"endTime\\\":\\\"2023-10-01T20:00:00.000Z\\\",\\\"status\\\":\\\"not confirmed\\\",\\\"tableId\\\":1,\\\"restaurantId\\\":1}"}
+
+]]></types:shape>
+    </types:type>
+    <types:type name="reservationFlow" format="json">
+      <types:shape format="weave" example="examples/resrvationFlow-1.json"><![CDATA[%dw 2.0
+
+type reservationFlow = {|
+  clientName: String, 
+  phone: String, 
+  email: String, 
+  startTime: String, 
+  endTime: String, 
+  amount: Number {"typeId": "int"}, 
+  tableId: Number {"typeId": "int"}, 
+  restaurantId: Number {"typeId": "int"}, 
+  action: String
+|} {"example": "{\\\"clientName\\\":\\\"John Doe\\\",\\\"phone\\\":\\\"123-456-7890\\\",\\\"email\\\":\\\"john.doe@example.com\\\",\\\"startTime\\\":\\\"2023-10-01T18:00:00Z\\\",\\\"endTime\\\":\\\"2023-10-01T20:00:00Z\\\",\\\"amount\\\":300,\\\"tableId\\\":1,\\\"restaurantId\\\":1,\\\"action\\\":\\\"pay\\\"}"}
+
+]]></types:shape>
+    </types:type>
+    <types:type name="paymentRequest" format="json">
+      <types:shape format="weave" example="examples/paymentRequet-1.json"><![CDATA[%dw 2.0
+
+type paymentRequest = {|
+  reservationId: Number {"typeId": "int"}, 
+  tableId: Number {"typeId": "int"}, 
+  amount: Number {"typeId": "int"}, 
+  action: String
+|} {"example": "{\\\"reservationId\\\":1,\\\"tableId\\\":1,\\\"amount\\\":300,\\\"action\\\":\\\"pay\\\"}"}
+
+]]></types:shape>
+    </types:type>
+    <types:type name="payment" format="json">
+      <types:shape format="weave" example="examples/payment.json"><![CDATA[%dw 2.0
+
+type payment = {|
+  reservationId: Number {"typeId": "int"}, 
+  tableId: Number {"typeId": "int"}, 
+  amount: Number {"typeId": "int"}
+|} {"example": "{\\\"reservationId\\\":1,\\\"tableId\\\":1,\\\"amount\\\":300}"}
+
+]]></types:shape>
+    </types:type>
+  </types:catalog>
+  <types:enrichment select="#113ccc02-d880-4663-8e66-e09a69bd3dbe">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:message>
+          <types:payload type="table"/>
+        </types:message>
+      </types:input-event>
+    </types:processor-declaration>
+  </types:enrichment>
+  <types:enrichment select="#550cd68e-d8d7-4914-b77e-b25198f77d4c">
+    <types:processor-declaration>
+      <types:output-event>
+        <types:message>
+          <types:payload type="resqponse"/>
+        </types:message>
+      </types:output-event>
+    </types:processor-declaration>
+  </types:enrichment>
+  <types:enrichment select="#cd806205-e087-4ecf-8674-5ea2ff4f2f29">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:message>
+          <types:payload type="reservationFlow"/>
+        </types:message>
+      </types:input-event>
+      <types:output-event>
+        <types:message>
+          <types:payload type="reservationRequest"/>
+        </types:message>
+      </types:output-event>
+    </types:processor-declaration>
+  </types:enrichment>
+  <types:enrichment select="#89bdd3f7-04a0-45e9-9120-5cfb8de58159">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:message>
+          <types:payload type="ReservationOutput"/>
+        </types:message>
+        <types:variables>
+          <types:variable name="mainBody" type="reservationFlow"/>
+        </types:variables>
+      </types:input-event>
+      <types:output-event>
+        <types:message>
+          <types:payload type="paymentRequest"/>
+        </types:message>
+      </types:output-event>
+    </types:processor-declaration>
+  </types:enrichment>
+  <types:enrichment select="#f158ee6f-99e8-49bf-8c95-61c62c6c1ee9">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:message>
+          <types:payload type="paymentRequest"/>
+        </types:message>
+      </types:input-event>
+      <types:output-event>
+        <types:message>
+          <types:payload type="payment"/>
+        </types:message>
+      </types:output-event>
+    </types:processor-declaration>
+  </types:enrichment>
+</types:mule>

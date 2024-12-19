@@ -1,10 +1,10 @@
 const db = require("../config/db");
 
 class Payment {
-  static create(paymentId, reservationId, status, callback) {
+  static create(paymentId, reservationId, status, amount, callback) {
     const query =
-      "INSERT INTO payments (paymentId, reservationId, status) VALUES (?, ?, ?)";
-    db.query(query, [paymentId, reservationId, status], callback);
+      "INSERT INTO payments (paymentId, reservationId, status, amount) VALUES (?, ?, ?, ?)";
+    db.query(query, [paymentId, reservationId, status, amount], callback);
   }
 
   static updateReservationStatus(reservationId, status, callback) {
@@ -19,3 +19,4 @@ class Payment {
 }
 
 module.exports = Payment;
+
