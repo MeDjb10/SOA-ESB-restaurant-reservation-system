@@ -1,5 +1,5 @@
 # **Restaurant Reservation System**
-![soa](screenshot/Diag.webp)
+![soa](screenshots/Diag.webp)
 
 ## **Overview**
 This repository demonstrates a service-oriented architecture (SOA)-based restaurant reservation system, integrating multiple independent services using REST and SOAP protocols. The system employs an Enterprise Service Bus (ESB) concept to streamline communication between services, ensuring efficient data flow and interoperability.
