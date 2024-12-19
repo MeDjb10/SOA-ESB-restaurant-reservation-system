@@ -138,12 +138,15 @@ The Mule Project acts as the **Enterprise Service Bus (ESB)**, coordinating comm
 
 ### **Screenshots of MuleSoft Flows**
 1. **Restaurant List Flow**
+
    ![Restaurant List Flow](screenshots/Flow1.png)
 
 2. **Table Availability Flow**
+
    ![Table Availability Flow](screenshots/Flow2.png)
 
 3. **Reservation & Payment Flow**
+   
    ![Reservation & Payment Flow](screenshots/Flow3.png)
 ---
 
@@ -284,8 +287,3 @@ cd restaurant-reservation-system
 
 ## **Contributing**
 Contributions are welcome! Please fork the repository, create a new branch for your feature or bug fix, and submit a pull request.
-
----
-
-## **License**
-This project is licensed under the MIT License. See the LICENSE file for details.
