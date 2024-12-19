@@ -42,6 +42,7 @@ The ESB acts as the central communication hub for all services, enabling message
 
 ---
 
+
 ## **Repository Structure**
 ```
 restaurant-reservation-system/
@@ -62,7 +63,88 @@ restaurant-reservation-system/
 |
 └── Bus-Config.xml/   ESB mule configuration file
 ```
+## **Mule Project Overview**
 
+The Mule Project acts as the **Enterprise Service Bus (ESB)**, coordinating communication between services. MuleSoft simplifies service orchestration by using various components to route, transform, and handle messages efficiently. Below is an explanation of the key components used in this project:
+
+### **Key Mule Components**
+
+1. **HTTP Listener**:
+   - Acts as the entry point for incoming requests from clients.
+   - Listens for HTTP requests and forwards them to the appropriate flow or service.
+
+2. **HTTP Request**:
+   - Sends requests to external services or APIs.
+   - In this project, it is used to communicate with the Restaurant List Service, Table Availability Service, Reservation Service, and Payment Service.
+
+3. **Message Transformer**:
+   - Processes and transforms incoming messages into the required format for the target service.
+   - Example: Converts XML payloads into JSON or vice versa, ensuring service compatibility.
+
+4. **JMS Publish and Consume**:
+   - **Publish**: Sends messages to a JMS queue for asynchronous communication.
+   - **Consume**: Listens for messages from the JMS queue and processes them.
+   - Enables decoupled communication, improving system scalability.
+
+5. **Logger**:
+   - Records messages or events for debugging and monitoring purposes.
+   - Used extensively to track the flow of data between services and log errors or important events.
+
+6. **Choice Router**:
+   - Routes messages to different flows or endpoints based on specific conditions.
+   - Example: Directs payment-related requests to the Payment Service and reservation-related requests to the Reservation Service.
+
+7. **Error Handler**:
+   - Catches and handles exceptions that occur during message processing.
+   - Configured to return appropriate error responses or retry operations when necessary.
+
+8. **On New Message**:
+   - Triggers an event whenever a new message is published to a JMS queue or other messaging systems.
+   - In this project, used to monitor specific events like new reservations or payment updates.
+
+---
+
+### **Mule Flows**
+
+1. **Restaurant List Flow**:
+   - Accepts client requests for restaurant data via the HTTP Listener.
+   - Forwards the Restaurant List Service request using an HTTP Request component.
+   - Transforms and returns the response to the client.
+
+2. **Table Availability Flow**:
+   - Accepts requests to check table availability.
+   - Communicates with the Table Availability Service (SOAP-based) using the HTTP Request component.
+   - Transforms SOAP responses into JSON for client consumption.
+
+3. **Reservation & Payment Flow**:
+   - Handles reservation creation and payment confirmation.
+   - Uses the HTTP Request to communicate with the Reservation Service and Payment Service.
+   - Publishes messages to a JMS queue for asynchronous processing and updates.
+
+4. **Error Handling Flow**:
+   - Configures custom error responses for client requests in case of service failures.
+   - Ensures the client receives meaningful error messages and prevents data corruption.
+
+---
+
+### **Benefits of Using MuleSoft ESB**
+
+- **Centralized Communication**: Simplifies the interaction between distributed services.
+- **Scalability**: Decoupled architecture enables easy addition of new services or changes to existing ones.
+- **Data Transformation**: Seamlessly handles data format conversion between services (e.g., XML to JSON).
+- **Error Management**: Provides robust error-handling mechanisms to ensure system reliability.
+
+---
+
+### **Screenshots of MuleSoft Flows**
+1. **Restaurant List Flow**
+   ![Restaurant List Flow](screenshots/Flow1.png)
+
+2. **Table Availability Flow**
+   ![Table Availability Flow](screenshots/Flow2.png)
+
+3. **Reservation & Payment Flow**
+   ![Reservation & Payment Flow](screenshots/Flow3.png)
 ---
 
 ## **Database Schema**
@@ -198,20 +280,6 @@ cd restaurant-reservation-system
 - Use the Reservation Service to create reservations.
 - Use the Payment Service to confirm or cancel reservations.
 
----
-## **Screenshots**
-### MuleSoft Flow
-   - **Restaurant List Flow**
-     
-     ![MuleSoft Flow](screenshots/Flow1.png)
-     
-   - **Table availability Flow**
-     
-     ![MuleSoft Flow](screenshots/Flow2.png)
-
-   - **Reservation & Payment Flow**
-     
-     ![MuleSoft Flow](screenshots/Flow3.png)
 ---
 
 ## **Contributing**
